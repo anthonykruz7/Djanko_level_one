@@ -1,0 +1,57 @@
+{% extends 'posts/base.html' %}
+
+{% block content %}
+<div class="max-w-3xl mx-auto bg-white shadow-xl rounded-2xl overflow-hidden animate-fadeIn border border-gray-100">
+  <!-- Header -->
+  <div class="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-6">
+    <h1 class="text-3xl font-bold">
+      {% if form_type == 'create' %}
+        ✍️ Create a New Post
+      {% else %}
+        📝 Edit Post
+      {% endif %}
+    </h1>
+    <p class="text-sm opacity-80 mt-1">Share your thoughts, stories, and ideas with the world.</p>
+  </div>
+
+  <!-- Form Body -->
+  <div class="p-8">
+    <form method="POST" class="space-y-6">
+      {% csrf_token %}
+
+      <!-- Title Field -->
+      <div>
+        <label for="title" class="block text-gray-700 font-medium mb-2">Title</label>
+        <input type="text" name="title" id="title" value="{{ post.title|default:'' }}"
+          class="w-full border border-gray-300 rounded-lg px-4 py-3 text-gray-800 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:outline-none placeholder-gray-400"
+          placeholder="Enter a catchy title for your post...">
+      </div>
+
+      <!-- Content Field -->
+      <div>
+        <label for="content" class="block text-gray-700 font-medium mb-2">Content</label>
+        <textarea name="content" id="content" rows="10"
+          class="w-full border border-gray-300 rounded-lg px-4 py-3 text-gray-800 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:outline-none placeholder-gray-400 resize-y"
+          placeholder="Start writing your post here...">{{ post.content|default:'' }}</textarea>
+      </div>
+
+      <!-- Buttons -->
+      <div class="flex justify-between items-center pt-4">
+        <a href="{% url 'home' %}"
+           class="bg-gray-200 text-gray-800 px-6 py-2 rounded-lg font-medium hover:bg-gray-300 transition transform hover:-translate-y-0.5">
+          ← Cancel
+        </a>
+        <button type="submit"
+          class="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-2 rounded-lg font-semibold shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition-all">
+          {% if form_type == 'create' %}
+            Publish Post
+          {% else %}
+            Update Post
+          {% endif %}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}
+

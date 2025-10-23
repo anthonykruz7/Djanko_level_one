@@ -1,0 +1,53 @@
+{% extends 'posts/base.html' %}
+
+{% block content %}
+<!-- Page Header -->
+<div class="text-center mb-12">
+  <h1 class="text-5xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-500 to-blue-600 animate-gradient-x mb-3">
+    Welcome to KBlogApp
+  </h1>
+  <p class="text-gray-600 text-lg">Explore ideas, thoughts, and stories from amazing creators.</p>
+</div>
+
+<!-- Posts Section -->
+{% if posts %}
+  <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+    {% for post in posts %}
+      <div class="group bg-white rounded-2xl shadow-md hover:shadow-xl border border-gray-100 overflow-hidden transform hover:-translate-y-1 transition-all duration-300">
+        <!-- Header -->
+        <div class="p-6">
+          <h2 class="text-2xl font-bold text-gray-800 mb-2 group-hover:text-blue-600 transition">
+            {{ post.title }}
+          </h2>
+          <p class="text-sm text-gray-500 mb-4 italic">
+            {{ post.created_at|date:"F j, Y" }}
+          </p>
+
+          <!-- Post preview -->
+          <p class="text-gray-700 leading-relaxed mb-6">
+            {{ post.content|truncatewords:30 }}
+          </p>
+
+          <!-- Button -->
+          <a href="{% url 'details' post.pk %}"
+             class="inline-block bg-gradient-to-r from-blue-600 to-purple-600 text-white px-5 py-2.5 rounded-lg font-medium shadow-md hover:shadow-lg hover:from-purple-600 hover:to-blue-600 transform hover:-translate-y-0.5 transition-all">
+            Read More →
+          </a>
+        </div>
+
+        <!-- Subtle footer strip -->
+        <div class="h-1 bg-gradient-to-r from-blue-500 via-purple-400 to-pink-400"></div>
+      </div>
+    {% endfor %}
+  </div>
+{% else %}
+  <div class="text-center mt-16">
+    <h2 class="text-3xl font-semibold text-gray-600 mb-4">No Posts Yet 😔</h2>
+    <a href="{% url 'create' %}"
+       class="inline-block bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-3 rounded-xl font-medium shadow-md hover:shadow-lg hover:from-purple-600 hover:to-blue-600 transform hover:-translate-y-0.5 transition-all">
+      Add Your First Post
+    </a>
+  </div>
+{% endif %}
+{% endblock %}
+
